@@ -1,0 +1,95 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+html {
+  scroll-behavior: smooth;
+  overflow-y: auto; 
+  overflow-x: auto; 
+}
+body {
+  background: linear-gradient(
+    180deg,
+    #07141f 0%,
+    #0b2233 40%,
+    #0e3a52 70%,
+    #155b7a 100%
+  );
+  color: #e8faff;
+  overflow-x: hidden;
+}
+
+
+section {
+  min-height: 100vh;
+  padding: 120px 40px 60px 40px;
+  scroll-margin-top: 90px;
+}
+
+
+
+h1 {
+  font-size: 3rem;
+  color: #bfe9ff;
+  text-shadow: 0 0 20px rgba(150, 220, 255, 0.35);
+}
+
+h2 {
+  font-size: 2.2rem;
+  color: #dff6ff;
+}
+
+
+p {
+  max-width: 800px;
+  line-height: 1.6;
+  font-size: 1.2rem;
+  color: #e8faffcc;
+}
+
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #081a26;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #7fdfff;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b8f1ff;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.float {
+  animation: float 3s ease-in-out infinite;
+}
+
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.hero p {
+  font-size: 1.3rem;
+  opacity: 0.85;
+}
