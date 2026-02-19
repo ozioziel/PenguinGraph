@@ -3,15 +3,14 @@ import Home from "./components/Home";
 import Algoritmo from "./components/Algortimo-Paneles/Algoritmo";
 import Grafo from "./components/Grafo";
 
+import { BrowserRouter } from "react-router-dom";
+import { MyRoutes } from "./routers/routes";
+
 function App() {
   return (
-    <>
-
-      <Home />
-      <Algoritmo />
-      <Grafo />
-      <Navbar/>      
-    </>
+    <BrowserRouter>
+      <MyRoutes />
+    </BrowserRouter>
   );
 }
 

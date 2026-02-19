@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import "./Navbar.css";
 
 export default function Navbar() {
@@ -6,9 +7,15 @@ export default function Navbar() {
       <div className="logo">Analisis de Algoritmos</div>
 
       <ul className="nav-links">
-        <li><a href="#home">Inicio</a></li>
-        <li><a href="#algoritmo">Algoritmos</a></li>
-        <li><a href="#grafo">Grafo</a></li>
+        <li>
+          <NavLink to="/">Inicio</NavLink>
+        </li>
+        <li>
+          <NavLink to="/algorithms">Algoritmos</NavLink>
+        </li>
+        <li>
+          <NavLink to="/graph">Grafo</NavLink>
+        </li>
       </ul>
     </nav>
   );
