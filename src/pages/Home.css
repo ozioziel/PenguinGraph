@@ -1,16 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap");
 
 /* ── CONTENEDOR ── */
 #home {
   position: relative;
-  width: 100%;
-  height: 100vh;
+  width: 100vw;
+  height: 100%;
+  min-height: calc(100vh - 64px);
   overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Syne', sans-serif;
+  font-family: "Syne", sans-serif;
   background: #020a12;
+  box-sizing: border-box;
 }
 
 /* ── VIDEO ── */
@@ -24,7 +26,6 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-
 }
 
 /* ── OVERLAY ── */
@@ -32,11 +33,23 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: 
-    radial-gradient(ellipse 70% 60% at 50% 55%, rgba(0, 160, 230, 0.08) 0%, transparent 70%),
-    linear-gradient(to bottom, rgba(2, 10, 18, 0.3) 0%, rgba(2, 10, 18, 0.75) 100%);
+  background:
+    radial-gradient(
+      ellipse 70% 60% at 50% 55%,
+      rgba(0, 160, 230, 0.08) 0%,
+      transparent 70%
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(2, 10, 18, 0.3) 0%,
+      rgba(2, 10, 18, 0.75) 100%
+    );
   z-index: 1;
   pointer-events: none;
+}
+a {
+  text-decoration: none;
+  color: #020a12;
 }
 
 /* ── CONTENIDO ── */
@@ -45,23 +58,25 @@
   z-index: 2;
   color: #e8f4ff;
   text-align: center;
-  padding: 32px 24px;
+  padding: 24px;
   max-width: 760px;
   width: 100%;
   animation: homeFadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0;
+  /* ✅ gap controlado en lugar de <br> */
+  gap: 20px;
+  box-sizing: border-box;
 }
 
 /* ── TÍTULO ── */
 #home .content h1 {
-  font-size: clamp(3rem, 8vw, 6.5rem);
+  font-size: clamp(2.5rem, 8vw, 5.5rem); /* ✅ reducido un poco */
   font-weight: 800;
   letter-spacing: -0.01em;
   line-height: 1;
-  margin: 0 0 40px;
+  margin: 0;
   background: linear-gradient(135deg, #ffffff 30%, #4fc3f7 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -70,33 +85,47 @@
 
 /* ── LINEA DECORATIVA bajo el título ── */
 #home .content h1::after {
-  content: '';
+  content: "";
   display: block;
   width: 48px;
   height: 2px;
   background: #4fc3f7;
-  margin: 14px auto 0;
-  -webkit-text-fill-color: transparent;
+  margin: 12px auto 0;
 }
 
-/* ── TEXTOS p1 (docente, estudiante, asignatura, año) ── */
-#home .content p1 {
-  display: block;
-  font-family: 'Space Mono', monospace;
-  font-size: clamp(0.72rem, 1.4vw, 0.88rem);
+/* ── BLOQUES DE INFO ── */
+/* ✅ p1 reemplazado por clases reales en <p> */
+#home .info-top,
+#home .info-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+#home .info-top p,
+#home .info-bottom p {
+  font-family: "Space Mono", monospace;
+  font-size: clamp(0.7rem, 1.4vw, 0.85rem);
   letter-spacing: 0.06em;
   color: rgba(179, 220, 242, 0.75);
-  line-height: 2;
+  line-height: 1.8;
+  margin: 0;
+}
+
+.info-top {
+  ul {
+    font-family: "Space Mono", monospace;
+    font-size: clamp(0.7rem, 1.4vw, 0.85rem);
+    letter-spacing: 0.06em;
+    color: rgba(179, 220, 242, 0.75);
+    line-height: 1.8;
+  }
 }
 
 /* ── BOTÓN ── */
-#home .content div {
-  margin: 32px 0 36px;
-}
-
 #home .btn-white {
   padding: 13px 40px;
-  font-family: 'Syne', sans-serif;
+  font-family: "Syne", sans-serif;
   font-size: 0.95rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -106,7 +135,10 @@
   border: none;
   cursor: pointer;
   clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
-  transition: background 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease;
+  transition:
+    background 0.22s ease,
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
   box-shadow: 0 0 24px rgba(79, 195, 247, 0.25);
 }
 
@@ -129,5 +161,13 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  #home .content {
+    padding: 16px;
+    gap: 16px;
   }
 }

@@ -1,16 +1,17 @@
 import { Routes, Route } from "react-router-dom";
-import Grafo from "../components/Grafo";
-import Algoritmo from "../components/Algortimo-Paneles/Algoritmo";
-import Home from "../components/Home";
-import { MainLayout } from "../components/MainLayout";
+import { MainLayout } from "../layouts/MainLayout";
+
+import { AlgoritmoPage } from "../pages/AlgoritmoPage";
+import { HomePage } from "../pages/HomePage";
+import { GrafoPage } from "../pages/GrafoPage";
 
 export function MyRoutes() {
   return (
     <Routes>
       <Route element={<MainLayout />}>
-        <Route path="/" element={<Home />} />
-        <Route path="/algorithms" element={<Algoritmo />} />
-        <Route path="/graph" element={<Grafo />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/algorithms" element={<AlgoritmoPage />} />
+        <Route path="/graph" element={<GrafoPage />} />
       </Route>
     </Routes>
   );

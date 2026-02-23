@@ -249,7 +249,7 @@ const slides = [
 
 const TOTAL = slides.length;
 
-export default function Algoritmo() {
+export function AlgoritmoPage() {
   const [slide, setSlide] = useState(0);
 
   const goToGraph = () => {
@@ -259,8 +259,6 @@ export default function Algoritmo() {
 
   const next = () => setSlide((s) => Math.min(s + 1, TOTAL - 1));
   const prev = () => setSlide((s) => Math.max(s - 1, 0));
-
-  const current = slides[slide];
 
   return (
     <>
