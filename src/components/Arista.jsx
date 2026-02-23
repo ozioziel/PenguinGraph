@@ -1,5 +1,3 @@
-import styled from "styled-components";
-
 export function Arista({
   ar,
   nodos,
@@ -17,7 +15,6 @@ export function Arista({
     strokeWidth: 20,
     fill: "none",
     cursor: herramienta === 2 || herramienta === 3 ? "pointer" : "default",
-    // ✅ activar también para herramienta 3
     pointerEvents: herramienta === 2 || herramienta === 3 ? "stroke" : "none",
   };
 

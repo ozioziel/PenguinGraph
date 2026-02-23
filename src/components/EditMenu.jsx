@@ -31,7 +31,7 @@ export function EditMenu({ tipo, datos, posicion, onGuardar, onCerrar }) {
       ref={menuRef}
       $x={posicion.x}
       $y={posicion.y}
-      onMouseDown={(e) => e.stopPropagation()} // evita que active el pan
+      onMouseDown={(e) => e.stopPropagation()}
     >
       <MenuHeader>
         <span>{tipo === "nodo" ? "✎ Editar Nodo" : "✎ Editar Arista"}</span>

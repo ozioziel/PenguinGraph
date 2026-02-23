@@ -8,7 +8,7 @@ const PING_HOVER =
 const PING_ACTIVE =
   "https://res.cloudinary.com/dj5kb9v78/image/upload/v1771434276/assets/pinguino3_n7pbmh.png";
 
-export function ToolBar({ herramienta, setHerramienta }) {
+export function ToolBar({ herramienta, setHerramienta, onClear }) {
   const [pingSrc, setPingSrc] = useState(PING_NORMAL);
 
   return (
@@ -41,7 +41,7 @@ export function ToolBar({ herramienta, setHerramienta }) {
           onMouseEnter={() => setPingSrc(PING_HOVER)}
           onMouseLeave={() => setPingSrc(PING_NORMAL)}
           onClick={() => {
-            setHerramienta(5);
+            onClear();
             setPingSrc(PING_ACTIVE);
             setTimeout(() => setPingSrc(PING_NORMAL), 600);
           }}

@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { Nodo } from "./Nodo";
 import { Arista } from "./Arista";
@@ -7,7 +7,7 @@ import { EditMenu } from "./EditMenu";
 const existeAristaContraria = (aristas, from, to) =>
   aristas.some((ar) => ar.from === to && ar.to === from);
 
-export function Graph({ herramienta, setHerramienta }) {
+export function Graph({ herramienta, setHerramienta, clearFlag }) {
   const [nodos, setNodos] = useState([]);
   const [aristas, setAristas] = useState([]);
   const [nodo_seleccionado, setNodo_seleccionado] = useState(null);
@@ -43,11 +43,9 @@ export function Graph({ herramienta, setHerramienta }) {
     ]);
   };
 
-  // ── Click en nodo ──
   const handleNodeClick = (id, e) => {
     if (weight_input) return;
 
-    // Herramienta 2 — Editar
     if (herramienta === 2) {
       const nodo = nodos.find((n) => n.id === id);
       setEditMenu({
@@ -93,7 +91,7 @@ export function Graph({ herramienta, setHerramienta }) {
     }
   };
 
-  // ── Click en arista ──
+  // ClICK ARISTA
   const handleAristaClick = (arista, posicion) => {
     if (herramienta === 3) {
       setAristas((prev) =>
@@ -112,7 +110,7 @@ export function Graph({ herramienta, setHerramienta }) {
     return;
   };
 
-  // ── Guardar edición ──
+  // ── Guardar edicion ──
   const handleGuardarEdit = (datoActualizado) => {
     if (editMenu.tipo === "nodo") {
       setNodos((prev) =>
@@ -130,7 +128,6 @@ export function Graph({ herramienta, setHerramienta }) {
     setEditMenu(null);
   };
 
-  // ── Pan ──
   const handleMouseDown = (e) => {
     if (weight_input || editMenu) return;
     if (e.target.closest("[data-nodo]")) return;
@@ -149,7 +146,6 @@ export function Graph({ herramienta, setHerramienta }) {
   const handleMouseUp = () => setIsPanning(false);
   const handleMouseLeave = () => setIsPanning(false);
 
-  // ── Limpiar todo ──
   const handleClear = () => {
     setNodos([]);
     setAristas([]);
@@ -159,6 +155,10 @@ export function Graph({ herramienta, setHerramienta }) {
     setOffset({ x: 0, y: 0 });
     setEditMenu(null);
   };
+
+  useEffect(() => {
+    handleClear();
+  }, [clearFlag]);
 
   // ── Peso ──
   const confirmarPeso = () => {
@@ -203,7 +203,6 @@ export function Graph({ herramienta, setHerramienta }) {
       </Toolbar>
 
       <Canvas $offsetX={offset.x} $offsetY={offset.y}>
-        {/* ── SVG: markers + aristas ── */}
         <SvgCanvas>
           <defs>
             <marker
@@ -231,7 +230,6 @@ export function Graph({ herramienta, setHerramienta }) {
           ))}
         </SvgCanvas>
 
-        {/* ── Nodos ── */}
         {nodos.map((node) => (
           <Nodo
             key={node.id}
@@ -241,7 +239,6 @@ export function Graph({ herramienta, setHerramienta }) {
           />
         ))}
 
-        {/* ── Input de peso ── */}
         {weight_input && (
           <WeightContainer $x={weight_input.x} $y={weight_input.y}>
             <span>Peso</span>
@@ -263,7 +260,6 @@ export function Graph({ herramienta, setHerramienta }) {
           </WeightContainer>
         )}
 
-        {/* ── Menú de edición ── */}
         {editMenu && (
           <EditMenu
             tipo={editMenu.tipo}
