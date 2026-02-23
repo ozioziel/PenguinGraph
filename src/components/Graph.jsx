@@ -41,6 +41,8 @@ export function Graph({ herramienta, setHerramienta, clearFlag }) {
         color: "#4fc3f7",
       },
     ]);
+
+    console.log(nodos.length + 1);
   };
 
   const handleNodeClick = (id, e) => {
@@ -131,20 +133,29 @@ export function Graph({ herramienta, setHerramienta, clearFlag }) {
   const handleMouseDown = (e) => {
     if (weight_input || editMenu) return;
     if (e.target.closest("[data-nodo]")) return;
+    if (herramienta !== 1) return;
     setIsPanning(true);
     panStart.current = { x: e.clientX - offset.x, y: e.clientY - offset.y };
   };
 
   const handleMouseMove = (e) => {
     if (!isPanning) return;
+    if (herramienta !== 1) return;
+
     setOffset({
       x: e.clientX - panStart.current.x,
       y: e.clientY - panStart.current.y,
     });
   };
 
-  const handleMouseUp = () => setIsPanning(false);
-  const handleMouseLeave = () => setIsPanning(false);
+  const handleMouseUp = () => {
+    if (herramienta !== 1) return;
+    setIsPanning(false);
+  };
+  const handleMouseLeave = () => {
+    if (herramienta !== 1) return;
+    setIsPanning(false);
+  };
 
   const handleClear = () => {
     setNodos([]);
@@ -196,12 +207,6 @@ export function Graph({ herramienta, setHerramienta, clearFlag }) {
       onMouseLeave={handleMouseLeave}
       $isPanning={isPanning}
     >
-      <Toolbar>
-        <ClearButton onClick={handleClear} disabled={nodos.length === 0}>
-          Limpiar Todo
-        </ClearButton>
-      </Toolbar>
-
       <Canvas $offsetX={offset.x} $offsetY={offset.y}>
         <SvgCanvas>
           <defs>
@@ -372,15 +377,6 @@ const WeightContainer = styled.div`
       justify-content: center;
     }
   }
-`;
-
-const Toolbar = styled.div`
-  position: absolute;
-  bottom: 16px;
-  right: 16px;
-  z-index: 20;
-  display: flex;
-  gap: 8px;
 `;
 
 const ClearButton = styled.button`

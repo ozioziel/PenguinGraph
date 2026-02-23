@@ -1,6 +1,10 @@
 import { useState } from "react";
 import styled from "styled-components";
 
+import { LuMousePointer2 } from "react-icons/lu";
+import { FaEdit } from "react-icons/fa";
+import { MdDeleteForever } from "react-icons/md";
+
 const PING_NORMAL =
   "https://res.cloudinary.com/dj5kb9v78/image/upload/v1771434276/assets/pinguino1_era4wq.png";
 const PING_HOVER =
@@ -11,28 +15,42 @@ const PING_ACTIVE =
 export function ToolBar({ herramienta, setHerramienta, onClear }) {
   const [pingSrc, setPingSrc] = useState(PING_NORMAL);
 
+  const handleKeyDown = (e) => {
+    if (e.key === "1") {
+      setHerramienta(1);
+    }
+    if (e.key === "2") {
+      setHerramienta(2);
+    }
+    if (e.key === "3") {
+      setHerramienta(3);
+    }
+  };
+
   return (
     <Container>
       <h2>Herramientas</h2>
-
       <div className="toolbar-content">
         <button
           className={herramienta === 1 ? "active" : ""}
           onClick={() => setHerramienta(1)}
+          onKeyDown={handleKeyDown}
         >
-          Mover
+          <LuMousePointer2 />
         </button>
         <button
           className={herramienta === 2 ? "active" : ""}
           onClick={() => setHerramienta(2)}
+          onKeyDown={handleKeyDown}
         >
-          Editar
+          <FaEdit id="SvgEdit" />
         </button>
         <button
           className={herramienta === 3 ? "active" : ""}
           onClick={() => setHerramienta(3)}
+          onKeyDown={handleKeyDown}
         >
-          Eliminar
+          <MdDeleteForever />
         </button>
 
         <img
@@ -54,7 +72,6 @@ export function ToolBar({ herramienta, setHerramienta, onClear }) {
 const Container = styled.div`
   position: sticky;
   top: 110px;
-  width: 210px;
   flex-shrink: 0;
   padding: 22px 16px;
   box-sizing: border-box;
@@ -87,7 +104,6 @@ const Container = styled.div`
     gap: 5px;
     align-items: center;
 
-    /* ✅ button en lugar de p */
     button {
       width: 100%;
       margin: 0;
@@ -109,6 +125,20 @@ const Container = styled.div`
         color 0.18s ease,
         background 0.18s ease,
         padding-left 0.18s ease;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    svg {
+      width: 40px;
+      height: 40px;
+      display: flex;
+    }
+
+    #SvgEdit {
+      height: 30px;
     }
 
     button:hover {
@@ -124,7 +154,6 @@ const Container = styled.div`
       color: #ffffff;
     }
 
-    /* ✅ estado activo — el usuario sabe qué herramienta está seleccionada */
     button.active {
       border-left-color: #4fc3f7;
       border-color: rgba(79, 195, 247, 0.35);

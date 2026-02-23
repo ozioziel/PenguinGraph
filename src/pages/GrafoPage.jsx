@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 import { Graph } from "../components/Graph";
 import { ToolBar } from "../components/Toolbar";
@@ -9,8 +9,20 @@ export function GrafoPage() {
   const [herramienta, setHerramienta] = useState(1);
 
   const [clearFlag, setClearFlag] = useState(false);
-
   const handleClear = () => setClearFlag((f) => !f);
+
+  const handleKeyDown = useCallback((e) => {
+    if (e.target.tagName === "INPUT") return;
+
+    const num = Number(e.key);
+    if (num >= 1 && num <= 3) setHerramienta(num);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleKeyDown]);
+
   return (
     <Container>
       <ToolBar
