@@ -1,5 +1,5 @@
 import GraphManager from "./Creacion/GraphManager";
-import Toolbar from "./Creacion/toolbar";
+import Toolbar from "./Creacion/Toolbar";
 import { useState } from "react";
 import "./Grafo.css";
 

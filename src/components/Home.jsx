@@ -1,12 +1,10 @@
 import "./Home.css"
-
+import { useNavigate } from "react-router-dom";
 export default function Home() {
+    const navigate = useNavigate()
 
     const goToAlgoritmos = () => {
-    const section = document.getElementById("algoritmo");
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
-    }
+        navigate("/algorithms")
   };
   return (
     <section id="home">

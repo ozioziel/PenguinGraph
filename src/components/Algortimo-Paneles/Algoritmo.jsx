@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import "./algoritmo.css";
 const slides = [
@@ -251,10 +252,9 @@ const TOTAL = slides.length;
 
 export default function Algoritmo() {
   const [slide, setSlide] = useState(0);
-
+  const navigate = useNavigate()
   const goToGraph = () => {
-    const section = document.getElementById("grafo");
-    if (section) section.scrollIntoView({ behavior: "smooth" });
+  navigate("/graph");
   };
 
   const next = () => setSlide((s) => Math.min(s + 1, TOTAL - 1));

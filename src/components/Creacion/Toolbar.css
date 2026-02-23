@@ -2,7 +2,7 @@
 
 /* ── TOOLBAR ── */
 .Toolbar {
-  position: sticky;
+  position: fixed;
   top: 110px;
   width: 210px;
   flex-shrink: 0;

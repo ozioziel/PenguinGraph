@@ -6,7 +6,6 @@ export default function Edge({ edge, mousePos, edges }) {
 
   if (!fromNode) return null;
 
-
   if (!toNode && mousePos) {
     return (
       <line
@@ -24,11 +23,10 @@ export default function Edge({ edge, mousePos, edges }) {
 
   if (!toNode) return null;
 
-
   if (fromNode.id === toNode.id) {
     const loopEdges = edges
       ? edges
-          .filter((e) => e.from.id === fromNode.id && e.to.id === fromNode.id)
+          .filter((e) => e.from === fromNode.id && e.to === fromNode.id)
           .sort((a, b) => a.id - b.id)
       : [];
     const loopIndex = loopEdges.findIndex((e) => e.id === edge.id);
@@ -36,8 +34,6 @@ export default function Edge({ edge, mousePos, edges }) {
     const baseRadius = 40;
     const radius = baseRadius + loopIndex * 35;
 
-
-    
     const offset = -10;
     const startX = fromNode.x + offset;
     const startY = fromNode.y - offset;
@@ -51,9 +47,8 @@ export default function Edge({ edge, mousePos, edges }) {
 
     const pathData = `M ${startX} ${startY} C ${cp1X} ${cp1Y}, ${cp2X} ${cp2Y}, ${endX} ${endY}`;
 
-
     const t = 0.5;
-    const curveCenterX = fromNode.x; 
+    const curveCenterX = fromNode.x;
     const curveCenterY =
       (1-t)*(1-t)*(1-t) * startY +
       3*(1-t)*(1-t)*t * cp1Y +
@@ -100,7 +95,7 @@ export default function Edge({ edge, mousePos, edges }) {
         {edge.name && (
           <text
             x={curveCenterX}
-            y={curveCenterY - rectHeight / 2 - 5} 
+            y={curveCenterY - rectHeight / 2 - 5}
             textAnchor="middle"
             dominantBaseline="middle"
             fill="black"
@@ -113,20 +108,18 @@ export default function Edge({ edge, mousePos, edges }) {
     );
   }
 
-
   const parallelEdges = edges
     ? edges
         .filter(
           (e) =>
-            (e.from.id === fromNode.id && e.to.id === toNode.id) ||
-            (e.from.id === toNode.id && e.to.id === fromNode.id)
+            (e.from === fromNode.id && e.to === toNode.id) ||
+            (e.from === toNode.id && e.to === fromNode.id)
         )
         .sort((a, b) => a.id - b.id)
     : [];
 
   const edgeIndex = parallelEdges.findIndex((e) => e.id === edge.id);
   const totalEdges = parallelEdges.length;
-
 
   const normalizedFrom = fromNode.id < toNode.id ? fromNode : toNode;
   const normalizedTo = fromNode.id < toNode.id ? toNode : fromNode;
@@ -172,7 +165,6 @@ export default function Edge({ edge, mousePos, edges }) {
         fill="transparent"
         markerEnd={edge.type === "Dirigido" ? "url(#arrow)" : undefined}
       />
-
       {edge.weight !== undefined && (
         <>
           <rect
@@ -198,7 +190,6 @@ export default function Edge({ edge, mousePos, edges }) {
           </text>
         </>
       )}
-
       {edge.name && (
         <text
           x={curveCenterX}

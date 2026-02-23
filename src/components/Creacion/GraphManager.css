@@ -1,0 +1,5 @@
+.svg-container {
+
+  overflow-x: auto; /*En caso de alcanzar los limites de la pantalla aniade un scrollbar*/
+  overflow-y: hidden;
+}

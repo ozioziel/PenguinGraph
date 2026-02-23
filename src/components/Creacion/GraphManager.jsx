@@ -16,6 +16,7 @@ export default function GraphManager({herramienta}) {
   const [state_edge, setStateEdge] = useState(false);
   const [selectedNode, setSelectedNode] = useState(null);
   const [selectedEdge, setSelectedEdge] = useState(null);
+  const [draggingNodeId, setDraggingNodeId] = useState(null);
   const svgReference = useRef(null);
 //Use effect para actualizacion de grado
 useEffect(() => {
@@ -28,13 +29,13 @@ useEffect(() => {
 
 
         if (edge.type === "No Dirigido") {
-          if (edge.from.id === node.id || edge.to.id === node.id) degree++;
+          if (edge.from === node.id || edge.to === node.id) degree++;
         }
 
    
         if (edge.type === "Dirigido") {
-          if (edge.from.id === node.id) degree++; 
-          if (edge.to.id === node.id) degree++;  
+          if (edge.from === node.id) degree++; 
+          if (edge.to === node.id) degree++;  
         }
       });
 
@@ -52,7 +53,7 @@ useEffect(() => {
       
     }
 
-  if (herramienta === 5) {
+  if (herramienta === 6) {
     setNodes([]);
     setEdge([]);
     setNextIdNode(1);
@@ -71,10 +72,10 @@ useEffect(() => {
     const dy = yClick - node.y;
     return Math.sqrt(dx * dx + dy * dy) <= radius;
   }
-  function isInsideEdge(xClick, yClick, edge, tolerance = 8) {
-  const from = edge.from;
-  const to = edge.to;
-  if (!to) return false;
+function isInsideEdge(xClick, yClick, edge, tolerance = 8) {
+  const from = nodes.find(n => n.id === edge.from);
+  const to = nodes.find(n => n.id === edge.to);
+  if (!to || !from) return false;
 
 
 if (from.id === to.id) {
@@ -93,8 +94,8 @@ if (from.id === to.id) {
 
   const parallelEdges = edges.filter(
     (e) =>
-      (e.from.id === from.id && e.to.id === to.id) ||
-      (e.from.id === to.id && e.to.id === from.id)
+      (e.from === from.id && e.to === to.id) ||
+      (e.from === to.id && e.to === from.id)
   ).sort((a, b) => a.id - b.id);
 
   const edgeIndex = parallelEdges.findIndex((e) => e.id === edge.id);
@@ -165,14 +166,16 @@ if (from.id === to.id) {
       const clickedNode = nodes.find(node => isInsideNode(x, y, node, 20));
       if (clickedNode && state_edge){
       console.log('click second nodo')
-      const newEdge = {
-        id: nextIdEdge,
-        from: edgeStartNode,
-        to: clickedNode,
-        type: "Dirigido",
-        weigth: 0
-      }
-      
+
+      // Le pasamos como valores el id del propieo Edge, el id del primer nodo y el id del segundo nodo, en este caso es cuando esta la linea punteda y debemos elejit a que nodo conectar
+        const newEdge = {
+          id: nextIdEdge,
+          from: edgeStartNode,
+          to: clickedNode.id,
+          type: "Dirigido",
+          weight: 0
+        }
+      //esto es con fines que la herramienta mover funcione correctamente
       setEdge(prev => [...prev, newEdge]);
       setNextIdEdge(prev => prev + 1);
       setEdgeStartNode(null);
@@ -184,7 +187,7 @@ if (from.id === to.id) {
       
       else if (clickedNode && !state_edge) {
         console.log('click nodo') //Clikeaste un Nodo
-        setEdgeStartNode(clickedNode);
+        setEdgeStartNode(clickedNode.id);
         setStateEdge(true);
         
 
@@ -200,7 +203,10 @@ if (from.id === to.id) {
 
     }
 
-if (herramienta === 4) {
+if (herramienta === 4){
+
+}
+if (herramienta === 5) {
   const clickedNode = nodes.find(node => isInsideNode(x, y, node, 20));
 
   if (clickedNode) {
@@ -208,9 +214,9 @@ if (herramienta === 4) {
 
     setNodes(prevNodes => prevNodes.filter(n => n.id !== clickedNode.id));
     setEdge(prevEdges =>
-      prevEdges.filter(e => e.from.id !== clickedNode.id && e.to.id !== clickedNode.id)
-    );
-
+      prevEdges.filter(e => e.from !== clickedNode.id && e.to !== clickedNode.id)
+    ); //Recorremos cada id del array  y verificamos si el nodo clickeado tiene alguna arista asociada
+    //Al aplicar filter nos quedamos con los nodos que tenga id distinta, lo que significa que nodo que tenga arista se elimina nodo y arista
     return; 
   }
 
@@ -231,16 +237,62 @@ if (herramienta === 4) {
   }
 
 
-  function handleMouseMove(e) {
-    if (edgeStartNode) {
-      const rect = e.currentTarget.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      setMousePos({ x, y });
-    }
+function handleMouseMove(e) {
+  const rect = e.currentTarget.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+
+
+  if (edgeStartNode) {
+    setMousePos({ x, y });
   }
 
-  //repasar con ejercicios --------------------
+
+  if (draggingNodeId !== null) {
+    setNodes(prev =>
+      prev.map(node =>
+        node.id === draggingNodeId
+          ? { ...node, x, y }
+          : node
+      )
+    );
+  }
+}
+
+function handleMouseDown(e) {
+  if (herramienta !== 4) return;
+
+  const rect = e.currentTarget.getBoundingClientRect();
+  const touch = e.touches ? e.touches[0] : e; 
+  const x = touch.clientX - rect.left;
+  const y = touch.clientY - rect.top;
+
+  const clickedNode = nodes.find(node => isInsideNode(x, y, node, 20));
+  if (clickedNode) setDraggingNodeId(clickedNode.id);
+}
+
+function handleMouseMove(e) {
+  const rect = e.currentTarget.getBoundingClientRect();
+  const touch = e.touches ? e.touches[0] : e;
+  const x = touch.clientX - rect.left;
+  const y = touch.clientY - rect.top;
+
+  if (edgeStartNode) setMousePos({ x, y });
+
+  if (draggingNodeId !== null) {
+    setNodes(prev =>
+      prev.map(node =>
+        node.id === draggingNodeId ? { ...node, x, y } : node
+      )
+    );
+  }
+}
+
+function handleMouseUp() {
+  setDraggingNodeId(null);
+}
+
+  //la vida --------------------
   function updateNode(id, newData) {
   setNodes(prev =>
     prev.map(n => n.id === id ? { ...n, ...newData } : n)
@@ -266,12 +318,13 @@ function updateEdge(id, newData) {
     if ((selectedNode || selectedEdge )&& svgReference.current) {
     const rect = svgReference.current.getBoundingClientRect();
     
-    if (selectedEdge){
-    
-    panelPosition = {
-        x: rect.left + selectedEdge.from.x,
-        y: rect.top + selectedEdge.from.y
-    }}
+    if (selectedEdge){ //Busca si seleccionamos algun edge, en cuyo caso busca por id, y da la posicion del panel
+      const fromNode = nodes.find(n => n.id === selectedEdge.from);
+      panelPosition = {
+        x: rect.left + fromNode.x,
+        y: rect.top + fromNode.y
+      }
+    }
     if (selectedNode){
     
     panelPosition = {
@@ -284,20 +337,19 @@ function updateEdge(id, newData) {
 
   return (
      <>
-         <div
-      style={{
-        width: "100%",
-        overflowX: "auto",   
-        overflowY: "hidden"
-      }}
-    >
+    <div className="svg-container">
       <svg
         ref = {svgReference}
-        width="1920"
-        height="800"
+        width="2500"
+        height="100vh"
         style={{ background: "#e8f6ff", borderRadius: "10px" }}
         onClick={handleCanvasClick}
-        onMouseMove={handleMouseMove} 
+        onMouseMove={handleMouseMove}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        onTouchStart={handleMouseDown}//Equivalentes tactiles para celular
+        onTouchMove={handleMouseMove}
+        onTouchEnd={handleMouseUp}
       >
 
               
@@ -314,23 +366,26 @@ function updateEdge(id, newData) {
           <path d="M0,0 L0,6 L9,3 z" fill="#660000" />
         </marker>
       </defs>
-      {edges.map(edge => (
-        <Edge
-          key={edge.id}
-          edge={edge}
-          edges={edges}    
-        />
-      ))}
+
+            
+      {edges.map(edge => { //Cada vez que se re-renderiza ejecuta las funciones para encontrar el node from y el node to, para que la herramienta mover actualize aristas
+        const resolvedEdge = {
+          ...edge,
+          from: nodes.find(n => n.id === edge.from),
+          to: nodes.find(n => n.id === edge.to)
+        }
+        return <Edge key={edge.id} edge={resolvedEdge} edges={edges} />
+      })}
 
       {nodes.map(node => (
         <Node key={node.id} node={node} />
       ))}
 
-      {edgeStartNode && (
+      {edgeStartNode && ( //Renderizado mientras elejimos a que nodo conectar
         <Edge
-          edge={{ from: edgeStartNode }}
+          edge={{ from: nodes.find(n => n.id === edgeStartNode) }}// le pasamos como paramtro el id del node from
           mousePos={mousePos}
-          edges={[]}       
+          edges={[]}
         />
       )}
 
