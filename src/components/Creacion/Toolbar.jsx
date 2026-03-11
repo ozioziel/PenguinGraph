@@ -26,19 +26,16 @@ export default function ToolBar({setHerramienta}) {
 
       {!minimized && (
         <div className="toolbar-content">
-          <p onClick={() => handleClick(1)}>Aniadir Vertice</p>
-          <p onClick={() => handleClick(2)}>Aniadir Arista</p>
+          <p onClick={() => handleClick(1)}>Añadir Vertice</p>
+          <p onClick={() => handleClick(2)}>Añadir Arista</p>
           <p onClick={() => handleClick(3)}>Seleccionar</p>
           <p onClick={() => handleClick(4)}>Mover</p>
           <p onClick={() => handleClick(5)}>Eliminar</p>
-          <img
-            src={pingSrc}
-            alt="Click aqui para eliminar todo"
-            style={{ width: "50px", cursor: "pointer" }}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            onClick={() => { handleClick(6); setPingSrc("https://res.cloudinary.com/dj5kb9v78/image/upload/v1771434276/assets/pinguino3_n7pbmh.png")}}
-          />
+          <p onClick={() => handleClick(6)}>Matriz Adyacencia</p>
+          <p onClick={() => handleClick(7)}>Exportar</p>
+          <p onClick={() => handleClick(8)}>Importar</p>
+          <p onClick={() => handleClick(9)}>Ayuda</p>
+          <p onClick={() => handleClick(10)}>Eliminar Todo</p>
         </div>
       )}
     </div>

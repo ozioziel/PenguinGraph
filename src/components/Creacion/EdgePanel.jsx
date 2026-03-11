@@ -26,7 +26,7 @@ export default function EdgePanel({edge, position, onClose, onChange}){
 
         <div className = "field">
             <label> Peso </label>
-            <input value = {edge.weight || ""} onChange={(e) => onChange(edge.id, {weight: e.target.value})} />
+            <input  type="number" value = {edge.weight || ""} onChange={(e) => onChange(edge.id, {weight: e.target.value})} />
         </div>
 
         <div className = "field">

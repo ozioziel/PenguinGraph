@@ -12,17 +12,7 @@ export default function Node({ node }) {
       stroke="#003366"
       strokeWidth="2"
     />
-    <text
-      x = {node.x}
-      y={node.y + radius + offsetLabel}
-      textAnchor="middle"
-      dominantBaseline="hanging"
-      fill="black"
-      fontSize={12}
-      fontWeight="bold"
-    >
-        [{node.id}] {node.name}
-    </text>
+
 
     <text
       x = {node.x}
@@ -33,7 +23,7 @@ export default function Node({ node }) {
       fontSize={16}
       fontWeight="bold"
     >
-      {node.value}
+      {node.name}
     </text>
     </>
   );

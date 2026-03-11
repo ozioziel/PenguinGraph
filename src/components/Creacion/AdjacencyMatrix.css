@@ -1,0 +1,186 @@
+/* Panel lateral */
+.adjacency-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 420px;
+  background: #ffffff;
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  font-family: 'Segoe UI', sans-serif;
+  animation: slideIn 0.25s ease;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+
+/* Header */
+.adjacency-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: #003366;
+  color: white;
+}
+
+.adjacency-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.adjacency-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.adjacency-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Scroll container */
+.adjacency-scroll {
+  flex: 1;
+  overflow: auto;
+  padding: 16px;
+}
+
+/* Tabla */
+.adjacency-table {
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  min-width: 100%;
+}
+
+.adjacency-table th,
+.adjacency-table td {
+  border: 1px solid #d0dce8;
+  padding: 6px 10px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Encabezados */
+.col-header {
+  background: #003366;
+  color: white;
+  font-weight: 600;
+}
+
+.row-header {
+  background: #003366;
+  color: white;
+  font-weight: 600;
+  text-align: left;
+  padding-left: 10px;
+}
+
+.corner-cell {
+  background: #001a33;
+}
+
+/* Celdas de la matriz */
+.matrix-cell {
+  transition: background 0.15s;
+}
+
+.cell-zero {
+  background: #f5f8fc;
+  color: #aabbcc;
+}
+
+.cell-active {
+  background: #dceeff;
+  color: #003366;
+  font-weight: 600;
+}
+
+.cell-diagonal {
+  background: #ffeeba !important;
+  color: #856404 !important;
+  font-weight: 700;
+}
+
+/* Filas de totales */
+.summary-row .row-header {
+  background: #004c99;
+  font-style: italic;
+}
+
+.sum-header {
+  background: #004c99;
+  color: white;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.sum-cell {
+  background: #e6f0ff;
+  color: #003366;
+  font-weight: 700;
+}
+
+.count-cell {
+  background: #fff3cd;
+  color: #856404;
+  font-weight: 600;
+}
+
+.total-cell {
+  background: #cce0ff;
+  color: #001a33;
+  font-weight: 800;
+}
+
+/* Leyenda */
+.adjacency-legend {
+  display: flex;
+  gap: 16px;
+  padding: 12px 20px;
+  border-top: 1px solid #d0dce8;
+  font-size: 0.75rem;
+  color: #555;
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend-box {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+/* Mensaje vacío */
+.adjacency-empty {
+  padding: 24px;
+  color: #777;
+  text-align: center;
+  font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .adjacency-panel {
+    width: 100vw;
+  }
+}

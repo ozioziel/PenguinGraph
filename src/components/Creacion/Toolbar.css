@@ -2,7 +2,7 @@
 
 /* ── TOOLBAR ── */
 .Toolbar {
-  position: fixed;
+  position: fixed; /*para que se superponga, en realidad hace que se quede fijo sin importar el scroll*/
   top: 110px;
   width: 210px;
   flex-shrink: 0;
@@ -101,4 +101,18 @@
 
 .toolbar-content img:active {
   transform: scale(0.93);
+}
+
+.toolbar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.minimize-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: white;
 }

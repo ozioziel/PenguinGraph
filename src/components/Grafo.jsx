@@ -11,7 +11,8 @@ export default function Grafo() {
     <section id="grafo" className="grafo-layout">
       <div className="grafo-container">
         <Toolbar setHerramienta = {setHerramienta}/>
-        <GraphManager herramienta = {herramienta} />
+        <GraphManager herramienta = {herramienta} setHerramienta={setHerramienta}/>
+    
       </div>
     </section>
   );

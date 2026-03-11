@@ -25,11 +25,6 @@ export default function NodePanel({node, position, onClose, onChange}){
         </div>
 
         <div className = "field">
-            <label> Valor </label>
-            <input value = {node.value} onChange={(e) => onChange(node.id, {value: e.target.value})} />
-        </div>
-
-        <div className = "field">
             <label>Grado </label>
             <span>{node.degree}</span>
         </div>

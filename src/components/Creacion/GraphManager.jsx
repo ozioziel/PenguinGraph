@@ -2,14 +2,18 @@ import { useState, useEffect, useRef } from "react";
 import Node from "./Node";
 import Edge from "./Edge"
 import NodePanel from "./NodePanel";
+import AdjacencyMatrix from "./AdjacencyMatrix";
 import EdgePanel from "./EdgePanel";
-export default function GraphManager({herramienta}) {
+import Import from "./import";
+import Export from "./Export";
+import Help from "./Help"
+export default function GraphManager({herramienta, setHerramienta}) {
 
   const [nodes, setNodes] = useState([]);
   const [nextIdNode, setNextIdNode] = useState(1);
   const [edges, setEdge] = useState([]);
   const [nextIdEdge, setNextIdEdge] = useState(1);
-
+  const [showMatrix, setShowMatrix] = useState(false);
   const [edgeStartNode, setEdgeStartNode] = useState(null); 
   const [edgeSecondNode, setEdgeSecondNode] = useState(null); 
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -18,6 +22,10 @@ export default function GraphManager({herramienta}) {
   const [selectedEdge, setSelectedEdge] = useState(null);
   const [draggingNodeId, setDraggingNodeId] = useState(null);
   const svgReference = useRef(null);
+  const [showExport, setShowExport] = useState(false);
+  const [showImport, setShowImport] = useState(false);
+  const [showHelp, setShowHelp] = useState(true);
+  
 //Use effect para actualizacion de grado
 useEffect(() => {
   setNodes(prevNodes =>
@@ -43,17 +51,36 @@ useEffect(() => {
     })
   );
 }, [edges]);
-//Use effect para herramienta
-  useEffect(() => {
-    setSelectedNode(null)
-    setSelectedEdge(null)
-    if (herramienta !== 1) {
-      setEdgeStartNode(null);
-      setStateEdge(false);
-      
-    }
 
-  if (herramienta === 6) {
+useEffect(() => {
+  setSelectedNode(null);
+  setSelectedEdge(null);
+  if (herramienta !== 1) {
+    setEdgeStartNode(null);
+    setStateEdge(false);
+  }
+  if (herramienta === 6){
+    setShowMatrix(true);
+    setHerramienta(null);
+  }
+
+  if (herramienta === 7) {
+    setShowExport(true);   
+    setHerramienta(null);
+  }
+  if (herramienta === 8) {
+    setShowImport(true);   
+    setHerramienta(null);
+  }
+  if(herramienta === 9){
+    setShowHelp(true);
+    setHerramienta(null);
+    
+  }
+
+  if (herramienta == 10){
+
+
     setNodes([]);
     setEdge([]);
     setNextIdNode(1);
@@ -62,7 +89,7 @@ useEffect(() => {
     setSelectedEdge(null);
     setEdgeStartNode(null);
     setEdgeSecondNode(null);
-  }
+}
 }, [herramienta]);
 
 
@@ -152,7 +179,6 @@ if (from.id === to.id) {
         x: x,
         y: y,
         name: "",
-        value: "",
         degree: 0
       };
       setNodes(prev => [...prev, newNode]);
@@ -230,6 +256,7 @@ if (herramienta === 5) {
   }
 
 }
+
 
 
     
@@ -406,7 +433,39 @@ function updateEdge(id, newData) {
       />
 
       </div>
-    </>
+
+      {showMatrix && (
+  <AdjacencyMatrix
+    nodes={nodes}
+    edges={edges}
+    onClose={() => setShowMatrix(false)}
+  />
+)}
+    {showExport && (
+      <Export
+        nodes={nodes}
+        edges={edges}
+        onClose={() => setShowExport(false)}
+      />
+    )}
+    {showImport && (
+      <Import
+        onImport={(data) => {
+          setNodes(data.nodes);
+          setEdge(data.edges);
+          setNextIdNode(Math.max(...data.nodes.map(n => n.id)) + 1);
+          setNextIdEdge(Math.max(...data.edges.map(e => e.id)) + 1);
+        }}
+        onClose={() => setShowImport(false)}
+      />
+    )}
+
+    {showHelp && (
+      <Help
+        onClose={() => setShowHelp(false)}
+      />
+    )}
+  </>
     
   );
 }
