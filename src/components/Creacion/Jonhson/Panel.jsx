@@ -48,7 +48,7 @@ export default function Panel({ nodes, edges, onClose }) {
 
         {!executed ? (
           <div className="johnson-canvas-wrapper">
-            <svg width="2500" height="100%" className="johnson-svg">
+            <svg width="2500" height="1200" className="johnson-svg">
               <defs>
                 <marker id="arrow-johnson" markerWidth="10" markerHeight="10" refX="20" refY="3" orient="auto">
                   <path d="M0,0 L0,6 L9,3 z" fill="#660000" />

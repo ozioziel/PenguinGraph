@@ -61,7 +61,7 @@
 }
 
 .exec-canvas-wrapper {
-  flex: 1;
+
   overflow: auto;
   border-radius: 10px;
   background: #e8f6ff;

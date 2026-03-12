@@ -256,7 +256,7 @@ export default function Execute({ nodes, edges, source, target }) {
       <div className="exec-description">{currentStep.description}</div>
 
       <div className="exec-canvas-wrapper">
-        <svg width="2500" height="100%" style={{ display: "block" }}>
+        <svg width="2500" height="1200" style={{ display: "block" }}>
           <defs>
             <marker id="arrow-exec" markerWidth="10" markerHeight="10" refX="20" refY="3" orient="auto">
               <path d="M0,0 L0,6 L9,3 z" fill="#660000" />
