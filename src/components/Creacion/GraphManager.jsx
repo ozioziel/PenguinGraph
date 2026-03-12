@@ -7,6 +7,7 @@ import EdgePanel from "./EdgePanel";
 import Import from "./import";
 import Export from "./Export";
 import Help from "./Help"
+import Johnson from "./Jonhson/Panel";
 export default function GraphManager({herramienta, setHerramienta}) {
 
   const [nodes, setNodes] = useState([]);
@@ -25,6 +26,7 @@ export default function GraphManager({herramienta, setHerramienta}) {
   const [showExport, setShowExport] = useState(false);
   const [showImport, setShowImport] = useState(false);
   const [showHelp, setShowHelp] = useState(true);
+  const [showJohnson, setShowJohnson] = useState(false);
   
 //Use effect para actualizacion de grado
 useEffect(() => {
@@ -77,8 +79,12 @@ useEffect(() => {
     setHerramienta(null);
     
   }
+  if (herramienta === 10) {
+  setShowJohnson(true);
+  setHerramienta(null);
+}
 
-  if (herramienta == 10){
+  if (herramienta == 11){
 
 
     setNodes([]);
@@ -465,6 +471,14 @@ function updateEdge(id, newData) {
         onClose={() => setShowHelp(false)}
       />
     )}
+
+    {showJohnson && (
+    <Johnson
+      nodes={nodes}
+      edges={edges}
+      onClose={() => setShowJohnson(false)}
+    />
+  )}
   </>
     
   );

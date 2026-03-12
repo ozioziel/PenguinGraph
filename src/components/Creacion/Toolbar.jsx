@@ -35,7 +35,8 @@ export default function ToolBar({setHerramienta}) {
           <p onClick={() => handleClick(7)}>Exportar</p>
           <p onClick={() => handleClick(8)}>Importar</p>
           <p onClick={() => handleClick(9)}>Ayuda</p>
-          <p onClick={() => handleClick(10)}>Eliminar Todo</p>
+          <p onClick={() => handleClick(10)}>Algoritmo de Jonhson</p>
+          <p onClick={() => handleClick(11)}>Eliminar Todo</p>
         </div>
       )}
     </div>
